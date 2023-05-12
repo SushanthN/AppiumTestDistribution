@@ -94,7 +94,7 @@ public class DesiredCapabilityBuilder {
             }
             String osVersion = deviceProperty.getDevice().getOsVersion();
             if (osVersion != null) {
-                desiredCapabilities.setCapability(CapabilityType.VERSION, osVersion);
+                desiredCapabilities.setCapability(CapabilityType.BROWSER_VERSION, osVersion);
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, osVersion);
             }
         }

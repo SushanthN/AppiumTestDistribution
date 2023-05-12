@@ -22,10 +22,23 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.HashMap;
 
 import static com.appium.filelocations.FileLocations.PARALLEL_XML_LOCATION;
-import static com.appium.utils.ConfigFileManager.*;
+import static com.appium.utils.ConfigFileManager.SUITE_NAME;
+import static com.appium.utils.ConfigFileManager.RUNNER_LEVEL;
+import static com.appium.utils.ConfigFileManager.INCLUDE_GROUPS;
+import static com.appium.utils.ConfigFileManager.LISTENERS;
+import static com.appium.utils.ConfigFileManager.CATEGORY;
+import static com.appium.utils.ConfigFileManager.EXCLUDE_GROUPS;
+
+
 import static com.appium.utils.FigletHelper.figlet;
 import static java.lang.System.getProperty;
 import static java.util.Collections.addAll;
@@ -56,7 +69,8 @@ public class ATDExecutor {
                 constructXmlSuiteForClassLevelDistributionRunner(test, getTestMethods(setOfMethods),
                         suiteName, categoryName, deviceCount);
             } else if (test != null && !test.isEmpty()) {
-                constructXmlAndExecuteTestCaseAtRuntime(test, getTestMethods(setOfMethods), suiteName, categoryName, deviceCount);
+                constructXmlAndExecuteTestCaseAtRuntime(test, getTestMethods(setOfMethods),
+                        suiteName, categoryName, deviceCount);
             } else {
                 constructXmlSuiteForMethodLevelDistributionRunner(test,
                         getTestMethods(setOfMethods), suiteName, categoryName, deviceCount);
@@ -104,8 +118,8 @@ public class ATDExecutor {
     }
 
     public XmlSuite constructXmlSuiteForClassLevelDistributionRunner(List<String> tests,
-                                                                     Map<String, List<Method>> methods,
-                                                                     String suiteName, String categoryName, int deviceCount) {
+                        Map<String, List<Method>> methods,
+                        String suiteName, String categoryName, int deviceCount) {
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
         suite.setThreadCount(deviceCount);
@@ -130,8 +144,8 @@ public class ATDExecutor {
 
 
     public XmlSuite constructXmlSuiteForMethodLevelDistributionRunner(List<String> tests,
-                                                                      Map<String, List<Method>> methods, String suiteName,
-                                                                      String category, int deviceCount) {
+                          Map<String, List<Method>> methods, String suiteName,
+                          String category, int deviceCount) {
         include(groupsInclude, INCLUDE_GROUPS);
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
@@ -156,8 +170,8 @@ public class ATDExecutor {
     }
 
     public XmlSuite constructXmlAndExecuteTestCaseAtRuntime(List<String> testCases,
-                                                            Map<String, List<Method>> methods, String suiteName, String category, int deviceCount) {
-
+                        Map<String, List<Method>> methods, String suiteName,
+                        String category, int deviceCount) {
         List<XmlClass> classes = new ArrayList<>(); // equivalent of <classes> tag
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
