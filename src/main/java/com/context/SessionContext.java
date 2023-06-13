@@ -39,7 +39,12 @@ public class SessionContext {
 
     public static synchronized void remove(long threadId) {
         LOGGER.info(String.format("Removing context for thread - %s", threadId));
-        allTestsExecutionContext.remove(String.valueOf(threadId));
+        if(allTestsExecutionContext.containsKey(threadId))
+            allTestsExecutionContext.remove(String.valueOf(threadId));
+        else
+            LOGGER.info("Thread Id is not present   :"+threadId);
+        LOGGER.info("remove thread completed for thread id - "+threadId);
+
     }
 
     private static Properties loadReportPortalProperties() {

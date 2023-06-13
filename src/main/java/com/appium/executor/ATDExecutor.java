@@ -55,9 +55,10 @@ public class ATDExecutor {
             if (runnerLevel != null && runnerLevel.equalsIgnoreCase("class")) {
                 constructXmlSuiteForClassLevelDistributionRunner(test, getTestMethods(setOfMethods),
                         suiteName, categoryName, deviceCount);
-            } else if(test!=null && !test.isEmpty()){
-                    constructXmlAndExecuteTestCaseAtRuntime(test, getTestMethods(setOfMethods), suiteName, categoryName, deviceCount);
-            }else {
+            } else if (test != null && !test.isEmpty()) {
+                constructXmlAndExecuteTestCaseAtRuntime(test, getTestMethods(setOfMethods),
+                        suiteName, categoryName, deviceCount);
+            } else {
                 constructXmlSuiteForMethodLevelDistributionRunner(test,
                         getTestMethods(setOfMethods), suiteName, categoryName, deviceCount);
             }
@@ -104,8 +105,8 @@ public class ATDExecutor {
     }
 
     public XmlSuite constructXmlSuiteForClassLevelDistributionRunner(List<String> tests,
-                                                                     Map<String, List<Method>> methods,
-                                                                     String suiteName, String categoryName, int deviceCount) {
+                        Map<String, List<Method>> methods,
+                        String suiteName, String categoryName, int deviceCount) {
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
         suite.setThreadCount(deviceCount);
@@ -130,8 +131,8 @@ public class ATDExecutor {
 
 
     public XmlSuite constructXmlSuiteForMethodLevelDistributionRunner(List<String> tests,
-                                                                      Map<String, List<Method>> methods, String suiteName,
-                                                                      String category, int deviceCount) {
+                          Map<String, List<Method>> methods, String suiteName,
+                          String category, int deviceCount) {
         include(groupsInclude, INCLUDE_GROUPS);
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
@@ -156,8 +157,8 @@ public class ATDExecutor {
     }
 
     public XmlSuite constructXmlAndExecuteTestCaseAtRuntime(List<String> testCases,
-                                                            Map<String, List<Method>> methods, String suiteName, String category, int deviceCount) {
-
+                        Map<String, List<Method>> methods, String suiteName,
+                        String category, int deviceCount) {
         List<XmlClass> classes = new ArrayList<>(); // equivalent of <classes> tag
         XmlSuite suite = new XmlSuite();
         suite.setName(suiteName);
@@ -174,7 +175,7 @@ public class ATDExecutor {
             XmlClass xmlClass = new XmlClass(mapElement.getKey());
             List<XmlInclude> includedMethodsList = new ArrayList<>();
             for (Method methodName : mapElement.getValue()) {
-                for(String testCase: testCases){
+                for (String testCase : testCases) {
                     if (methodName.getName().equalsIgnoreCase(testCase)) {
                         XmlInclude includedTestMethod = new XmlInclude(testCase);
                         includedMethodsList.add(includedTestMethod);
@@ -182,7 +183,7 @@ public class ATDExecutor {
                     }
                 }
             }
-            if(!includedMethodsList.isEmpty()) {
+            if (!includedMethodsList.isEmpty()) {
                 xmlClass.setIncludedMethods(includedMethodsList);
                 classes.add(xmlClass);
             }
