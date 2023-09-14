@@ -315,6 +315,7 @@ public class HostMachineDeviceManager {
     private String getPathForChromeDriver(String id) throws IOException {
         int[] versionNamesArr = getChromeVersionsFor(id);
         int highestChromeVersion = Arrays.stream(versionNamesArr).max().getAsInt();
+        LOGGER.info("highest chrome version on device is "+ highestChromeVersion);
         WebDriverManager.chromedriver()
             .browserVersion(String.valueOf(highestChromeVersion)).setup();
         String message = "ChromeDriver for Chrome version " + highestChromeVersion
